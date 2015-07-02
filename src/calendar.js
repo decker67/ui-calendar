@@ -220,26 +220,15 @@ angular.module('ui.calendar', [])
             eventsWatcher = controller.changeWatcher(controller.allEvents, controller.eventFingerprint),
             options = null;
 
-        function getOptions(){
-          var calendarSettings = attrs.uiCalendar ? scope.$parent.$eval(attrs.uiCalendar) : {},
-              fullCalendarConfig;
-
-          fullCalendarConfig = controller.getFullCalendarConfig(calendarSettings, uiCalendarConfig);
-
-          var localeFullCalendarConfig = controller.getLocaleConfig(fullCalendarConfig);
-          angular.extend(localeFullCalendarConfig, fullCalendarConfig);
-          options = { eventSources: sources };
-          angular.extend(options, localeFullCalendarConfig);
-          //remove calendars from options
-          options.calendars = null;
-
-          var options2 = {};
-          for(var o in options){
-            if(o !== 'eventSources'){
-              options2[o] = options[o];
-            }
-          }
-          return JSON.stringify(options2);
+        function getOptions() {
+            var calendarSettings = attributes.uiCalendar ? scope.$parent.$eval(attributes.uiCalendar) : {};
+            var fullCalendarConfig = controller.getFullCalendarConfiguration(calendarSettings, uiCalendarConfiguration);
+            var localeFullCalendarConfig = controller.getLocaleConfiguration(fullCalendarConfig);
+  
+            angular.extend(localeFullCalendarConfig, fullCalendarConfig);
+            //remove calendars from config
+            localeFullCalendarConfig.calendars = null;
+            return JSON.stringify(localeFullCalendarConfig);
         }
 
         scope.destroy = function(){
